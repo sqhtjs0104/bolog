@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@prisma/client": "^6.1.0",
     "@supabase/supabase-js": "^2.47.10",
     "next": "15.1.3",

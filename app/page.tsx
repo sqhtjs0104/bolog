@@ -17,7 +17,6 @@ interface IQuote {
 
 export default function Home() {
   const [todos, setTodos] = useState<ITodo[]>([]);
-  const [quotes, setQuotes] = useState<IQuote[]>([]);
   const [loading, setIsLoading] = useState(false);
 
   const getTodos = () => {
@@ -27,13 +26,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    fetch('/api/todos')
-      .then((res) => res.json())
-      .then((data) => setTodos(data));
-
-    fetch("/api/quotes")
-      .then((res) => res.json())
-      .then((data) => setQuotes(data));
+    getTodos();
   }, []);
 
   const onAddTodo = async (event: FormEvent<HTMLFormElement>) => {
@@ -97,14 +90,14 @@ export default function Home() {
   }
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center h-full p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div>
           <h1 className="text-3xl mb-2">
-            Hi, this is Bo-log
+            Hi
           </h1>
           <h2 className="text-sm">
-            And it&apos;s still under development...
+            bo-log(at development...)
           </h2>
         </div>
 
@@ -115,7 +108,7 @@ export default function Home() {
             </p>
             <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)] flex flex-col gap-1">
               {
-                todos.map((todo) => (
+                todos && todos.map((todo) => (
                   <div key={todo.id} className="group relative">
                     <li dangerouslySetInnerHTML={{ __html: todo.content }}></li>
                     <div className="flex w-full justify-end gap-1 opacity-0 bg-gradient-to-r from-transparent via-transparent to-transparent group-hover:via-[#ffffff33] group-hover:to-[#ffffff] group-hover:opacity-100 absolute top-1/2 right-0 -translate-y-1/2">
@@ -131,25 +124,39 @@ export default function Home() {
             </ol>
           </div>
           <form onSubmit={onAddTodo} className="w-full">
-            <input type="text" name="content" placeholder="Somthing to do? (HTML)" className="border-b text-sm pb-1 px-1 outline-none w-full" disabled={loading} />
+            <input type="text" name="content" placeholder="Somthing to do?(HTML)" className="border-b text-sm pb-1 px-1 outline-none w-full" disabled={loading} />
           </form>
         </div>
-
       </main >
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        {
-          quotes.map((quote, i) => (
-            <div key={`${quote.category}-${i}`} className="text-center">
-              <p className="w-11/12 text-sm mb-1">
-                <i>&quot;{quote.quote}&quot;</i>
-              </p>
-              <span className="text-xs">
-                <i>- {quote.author} -</i>
-              </span>
-            </div>
-          ))
-        }
-      </footer>
-    </div >
+
+      <MainFooter />
+    </div>
+  );
+}
+
+const MainFooter = () => {
+  const [quotes, setQuotes] = useState<IQuote[]>([]);
+
+  useEffect(() => {
+    fetch("/api/quotes")
+      .then((res) => res.json())
+      .then((data) => setQuotes(data));
+  }, []);
+
+  return (
+    <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center" >
+      {
+        quotes.map((quote, i) => (
+          <div key={`${quote.category}-${i}`} className="text-center">
+            <p className="w-11/12 text-sm mb-1">
+              <i>&quot;{quote.quote}&quot;</i>
+            </p>
+            <span className="text-xs">
+              <i>- {quote.author} -</i>
+            </span>
+          </div>
+        ))
+      }
+    </footer>
   );
 }

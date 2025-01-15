@@ -11,7 +11,7 @@ export async function PATCH(
     const body = await req.json();
     const { content, completed } = body;
 
-    const id = Number((await params).id);
+    const id = Number(params.id);
 
     if (!id || isNaN(id)) {
       return NextResponse.json(
