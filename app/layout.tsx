@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
         <GNav />
-        <div className="w-full max-w-7xl mx-auto flex-1">
+        <div className="w-full max-w-6xl mx-auto flex-1 flex flex-col">
           {children}
         </div>
       </body>
