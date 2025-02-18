@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import GNav from "./components/GNav";
+import GNav from "./GNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +14,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bo-log",
+  title: {
+    template: "%s | Bo-log",
+    default: "Loading"
+  },
   description: "Personal development blog",
 };
 

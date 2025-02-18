@@ -41,8 +41,8 @@ export default function GNav() {
                       href={item.href}
                       className={classNames(
                         pathname.includes(item.href.replaceAll("/", ""))
-                          ? 'bg-gray-100' : '',
-                        'rounded-md px-3 py-2 text-sm font-medium flex items-center',
+                          ? 'font-semibold' : '',
+                        'rounded-md px-3 py-2 text-sm font-medium flex items-center w-20 justify-center',
                       )}
                     >
                       {item.name}
@@ -54,12 +54,12 @@ export default function GNav() {
           </div>
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
-              <button
+              {/* <button
                 type="button"
                 className="relative rounded-full p-1 text-gray-900 hover:text-black focus:outline-none"
               >
                 T
-              </button>
+              </button> */}
             </div>
           </div>
 

@@ -1,5 +1,12 @@
-import Quotes from "./components/Quotes";
-import Todos from "./components/Todos";
+import { Metadata } from "next";
+import Quotes from "./Quotes";
+import Todos from "./Todos";
+
+export const metadata: Metadata = {
+  title: "Home | Bo-log",
+  description: "Personal development blog",
+};
+
 
 export default function Home() {
   return (
