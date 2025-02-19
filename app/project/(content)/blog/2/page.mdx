@@ -1,0 +1,25 @@
+export const metadata = {
+    title: "페이지 메타데이터",
+    description: "MDX에서 메타데이터 추출하기",
+    date: "2025-02-19 17:17",
+};
+
+# 페이지 메타데이터
+
+## Static Metadata
+
+```javascript
+export const metadata = {
+    title: "Making the Web. Faster",
+    description:
+        "Our vision of the Web is a global realtime medium for both creators and consumers, where all friction and latency are eliminated",
+    openGraph: {
+        title: "Making the Web. Faster",
+        description:
+            "Our vision of the Web is a global realtime medium for both creators and consumers, where all friction and latency are eliminated",
+        images: [{ url: "/og/making-the-web-faster" }],
+    },
+};
+```
+
+Guilleromo의 경우 정적인 방식의 메타데이터 객체를 활용.

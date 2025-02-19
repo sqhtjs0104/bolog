@@ -1,0 +1,80 @@
+import Tooltip from "@/app/components/Tooltip";
+
+export const metadata = {
+    title: "프로젝트 기본 설정",
+    description: "NextJS + Markdown 블로그를 위한 기본 설정",
+    date: "2025-02-19 14:26",
+};
+
+# 프로젝트 기본 설정
+
+## Markdown?
+
+[마크다운(Mardown)](https://ko.wikipedia.org/wiki/%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4 "Wikipedia"): 일반 텍스트 기반 경량 마크업 언어.
+
+말이 조금 어렵지만, 사전 정의된 문법을 이용해 어렵지 않게 간단한 문서(git README 등...)를 제작할 수 있게 하는 언어.
+
+Notion, Obsidian 등 많은 텍스트 노트 앱에서 마크다운을 기본 기능으로 제공 중으로, 블로그 언어로도 많이 쓰임.
+
+Vercel의 CEO인 [Lee Robinson](https://leerob.com "Blog")과 [Guillermo Rauch](https://rauchg.com "Blog") 역시 마크다운 기반 블로그를 운영 중
+
+### MDX
+
+[MDX](https://mdxjs.com "npm"): 마크다운 파일을 임베딩 가능한 JSX 컴포넌트로 사용하기 위한 확장자.
+
+이를 이용해 ReactJS 및 NextJS 환경에서 마크다운 파일을 컴포넌트처럼 활용, 페이지에 삽입할 수 있다.
+
+## 사전 준비
+
+### 라이브러리 설치
+
+```
+npm i @next/mdx @types/mdx @mdx-js/loader @mdx-js/react
+```
+
+### 설정 파일 수정
+
+1. `next.config.ts`
+
+MDX 활성화를 위해 next.config.ts 파일을 수정.
+
+```typescript
+import { withMDX } from "@next/mdx";
+
+const nextConfig = withMDX({
+    extension: /\.mdx?$/,
+})({
+    reactStrictMode: true,
+    pageExtensions: ["ts", "tsx", "md", "mdx"], // MDX 확장자 추가
+});
+
+export default nextConfig;
+```
+
+2. `global.d.ts`
+
+MDX 타입을 확장해 사용하기 위해 프로젝트 root에 global.d.ts 파일을 만들어 아래 내용을 추가.
+
+```typescript
+declare module "*.mdx" {
+    let MDXComponent: (props: any) => JSX.Element;
+    export default MDXComponent;
+}
+```
+
+3. `mdx-components.tsx`
+
+[MDXJS 공식 문서](https://mdxjs.com/docs/getting-started/#nextjs "npm MDXJS Docs")에 따르면, NextJS 환경의 경우 프로젝트 루트 폴더에 `mdx-components.tsx`를 추가해야 MDX 호환이 가능하다.  
+또한 이를 이용해 직접 변환되는 마크다운 요소들의 스타일링을 커스텀할 수도 있다. [NextJS Docs](https://nextjs.org/docs/app/building-your-application/configuring/mdx#using-custom-styles-and-components "NextJS Docs")에도 본 내용이 적혀 있으니 참조.
+
+<br />
+
+```typescript
+import type { MDXComponents } from "mdx/types";
+
+export function useMDXComponents(components: MDXComponents): MDXComponents {
+    return {
+        ...components,
+    };
+}
+```
